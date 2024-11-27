@@ -50,6 +50,11 @@ class Tapa(Componente):
         self.componentes = {}
         self.componentes['corte_de_chapa'] = (1, CorteDeChapa(100, 200, espesor_de_chapa))
 
+class PerfilU(Componente):
+    def __init__(self, ancho_ext: int, alto_ext:int):
+        self.componentes = {}
+        self.componentes['corte_de_chapa'] = (1, CorteDeChapa(100, 200, 0.9))
+
 class Hoja(Componente):
     def __init__(self, cajon: Cajon, tapa: Tapa):
 
@@ -63,11 +68,6 @@ class Hoja(Componente):
         perfil_u_alto = cajon.profundidad_interior
 
         self.componentes['perfil_u'] = (1, PerfilU(ancho_ext = perfil_u_ancho, alto_ext=perfil_u_alto))
-
-class PerfilU(Componente):
-    def __init__(self, ancho_ext: int, alto_ext:int):
-        self.componentes = {}
-        self.componentes['corte_de_chapa'] = (1, CorteDeChapa(100, 200, 0.9))
 
 class PerfilMarcoAmericano(Componente):
     def __init__(self, largo_ext, tipo_de_marco:TipoDeMarco, espesor_de_chapa: float, descanso_para_hoja: int):
