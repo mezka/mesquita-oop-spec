@@ -79,8 +79,8 @@ class Marco(Componente):
 
         self.componentes = {}
 
-        self.componentes['dintel'] = (1, PerfilMarcoAmericano(largo_ext=ancho_mt, tipo_de_marco=TipoDeMarco, espesor_de_chapa=espesor_de_chapa, descanso_para_hoja=descanso_para_hoja))
-        self.componentes['jamba'] = (2, PerfilMarcoAmericano(largo_ext=alto_mt, tipo_de_marco=TipoDeMarco, espesor_de_chapa=espesor_de_chapa, descanso_para_hoja=descanso_para_hoja))
+        self.componentes['dintel'] = (1, PerfilMarcoAmericano(largo_ext=ancho_mt, tipo_de_marco=tipo_de_marco, espesor_de_chapa=espesor_de_chapa, descanso_para_hoja=descanso_para_hoja))
+        self.componentes['jamba'] = (2, PerfilMarcoAmericano(largo_ext=alto_mt, tipo_de_marco=tipo_de_marco, espesor_de_chapa=espesor_de_chapa, descanso_para_hoja=descanso_para_hoja))
 
 class PuertaSimpleLite(Componente):
 
