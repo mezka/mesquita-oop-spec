@@ -1,20 +1,18 @@
 from attributes import Sentido, TipoDeMarco, Grampa
 
 class Componente:
-    def mostrar_componentes(self):
-
-        print(f"----- {self.__class__} -----")
+    def mostrar_componentes(self, indent=0):
+        indentation = "  " * indent
+        print(f"{indentation}└── {self.__class__.__name__}")
 
         for key, value in self.__dict__.items():
-            if(key != 'componentes'):
-                print(f"{key}: {value}")
+            if key != 'componentes':
+                print(f"{indentation}    ├── {key}: {value}")
 
         if hasattr(self, 'componentes'):
-            for key, value in self.componentes.items():
-
-                print(key, value)
-                if(value[1].mostrar_componentes):
-                    value[1].mostrar_componentes()
+            for qty, sub_component in self.componentes.values():
+                print(f"{indentation}    ├── {qty}x {sub_component.__class__.__name__}")
+                sub_component.mostrar_componentes(indent + 2)
 
 class PanelDeRelleno(Componente):
     def __init__(self, codigo):
