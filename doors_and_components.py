@@ -133,7 +133,7 @@ class PuertaSimpleLite(Componente):
         
         self.componentes['burlete'] = (5, Burlete(20, 1))
         
-        codigo_bisagra_lite = self.__class__.ESPECIFICACION['BISAGRA'][Sentido.IZQUIERDA.name] if Sentido.IZQUIERDA else self.__class__.ESPECIFICACION['BISAGRA'][Sentido.DERECHA.name]
+        codigo_bisagra_lite = self.__class__.ESPECIFICACION['BISAGRA'][sentido.name]
         self.componentes['bisagra'] = (3, Bisagra(codigo_bisagra_lite))
 
 
