@@ -26,7 +26,7 @@ class Bisagra(Componente):
 
 class Burlete(Componente):
     def __init__(self, ancho: int, espesor:int):
-        self.ancho = ancho,
+        self.ancho = ancho
         self.espesor = espesor
 
 class CorteDeChapa(Componente):
