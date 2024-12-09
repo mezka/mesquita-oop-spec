@@ -1,9 +1,27 @@
 from attributes import Sentido, Marco, Grampa
-from base_classes import Hinge, SingleDoor, SingleDoorLeaf, DoorFrameDoubleRabbet, BendSingleDoorLeafBase, BendSingleDoorLeafCover, Core, ProfileFrameDoubleRabbet, ProfileFrameDoubleRabbetWithBackbendReturn
-from specific_parts import FireproofPanel, LiteHingeRight, LiteHingeLeft, IntumescentSeal10x1
+from base_classes import (
+    Hinge,
+    SingleDoor,
+    SingleDoorLeaf,
+    DoorFrameDoubleRabbet,
+    BendSingleDoorLeafBase,
+    BendSingleDoorLeafCover,
+    Core,
+    ProfileFrameDoubleRabbet,
+    ProfileFrameDoubleRabbetWithBackbendReturn,
+)
+from specific_parts import (
+    FireproofPanel,
+    LiteHingeRight,
+    LiteHingeLeft,
+    IntumescentSeal10x1,
+)
 from typing import Union
 
-class LiteProfileFrameDoubleRabbet100(ProfileFrameDoubleRabbetWithBackbendReturn):
+
+class LiteProfileFrameDoubleRabbet100(
+    ProfileFrameDoubleRabbetWithBackbendReturn, OdooAssemblyMixin
+):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
     FRAME_BACKBEND_RETURN = 10
@@ -23,10 +41,20 @@ class LiteProfileFrameDoubleRabbet100(ProfileFrameDoubleRabbetWithBackbendReturn
             frame_soffit=self.FRAME_SOFFIT,
             frame_rabbet_fixed=self.FRAME_RABBET_FIXED,
             frame_rabbet_for_leaf=self.FRAME_RABBET_FOR_LEAF,
-            sheet_metal_thickness=self.SHEET_METAL_THICKNESS
+            sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
         )
 
-class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet):
+    def get_name(self) -> str:
+        return f"Lite Profile Frame Double Rabbet 100 L={self.length}mm"
+
+    def get_internal_reference(self) -> str:
+        return f"LITE-FRAME-100-{self.length}"
+
+    def get_type(self) -> str:
+        return "product"
+
+
+class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
     FRAME_BACKBEND = 10
@@ -44,10 +72,11 @@ class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet):
             frame_soffit=self.FRAME_SOFFIT,
             frame_rabbet_fixed=self.FRAME_RABBET_FIXED,
             frame_rabbet_for_leaf=self.FRAME_RABBET_FOR_LEAF,
-            sheet_metal_thickness=self.SHEET_METAL_THICKNESS
+            sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
         )
 
-class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet):
+
+class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
     FRAME_BACKBEND = 10
@@ -65,81 +94,140 @@ class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet):
             frame_soffit=self.FRAME_SOFFIT,
             frame_rabbet_fixed=self.FRAME_RABBET_FIXED,
             frame_rabbet_for_leaf=self.FRAME_RABBET_FOR_LEAF,
-            sheet_metal_thickness=self.SHEET_METAL_THICKNESS
+            sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
         )
 
-class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase):
-    
+    def get_name(self) -> str:
+        return f"Lite Profile Frame Double Rabbet 100 L={self.length}mm"
+
+    def get_internal_reference(self) -> str:
+        return f"LITE-FRAME-100-{self.length}"
+
+    def get_type(self) -> str:
+        return "product"
+
+
+class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
+
     INTERIOR_DEPTH = 50
     ASSEMBLY_FLANGE_WIDTH = 5
     SHEET_METAL_THICKNESS = 0.9
-    
+
     def __init__(self, external_width_body: float, external_height_body: float):
         super().__init__(
             external_width_body=external_width_body,
             external_height_body=external_height_body,
             internal_depth=self.INTERIOR_DEPTH,
             assembly_flange_width=self.ASSEMBLY_FLANGE_WIDTH,
-            sheet_metal_thickness=self.SHEET_METAL_THICKNESS
+            sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
         )
 
-class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover):
-   RETURN_FLANGE_WIDTH = 5 
-   SHEET_METAL_THICKNESS = 0.9
-   FACE_OVERLAP = 18
+    def get_name(self) -> str:
+        return f"Lite Bend Single Door Leaf Base {self.external_width_body}x{self.external_height_body}"
 
-   def __init__(self, external_face_width: float, external_face_height: float):
-       super().__init__(
-           external_face_width=external_face_width,
-           external_face_height=external_face_height,
-           return_flange_width=self.RETURN_FLANGE_WIDTH,
-           sheet_metal_thickness=self.SHEET_METAL_THICKNESS
-       )
+    def get_internal_reference(self) -> str:
+        return f"LITE-BASE-{self.external_width_body}x{self.external_height_body}"
+
+    def get_type(self) -> str:
+        return "product"
 
 
+class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
+    RETURN_FLANGE_WIDTH = 5
+    SHEET_METAL_THICKNESS = 0.9
+    FACE_OVERLAP = 18
 
-class LiteSingleDoorLeaf(SingleDoorLeaf):
-   FACE_OVERLAP = 9
 
-   def __init__(self, external_width_body: float, external_height_body: float):
-       base = LiteBendSingleDoorLeafBase(
-           external_width_body=external_width_body,
-           external_height_body=external_height_body
-       )
+def __init__(self, external_face_width: float, external_face_height: float):
+    super().__init__(
+        external_face_width=external_face_width,
+        external_face_height=external_face_height,
+        return_flange_width=self.RETURN_FLANGE_WIDTH,
+        sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
+    )
 
-       cover = LiteBendSingleDoorLeafCover(
-           external_face_width=external_width_body + self.FACE_OVERLAP * 2,
-           external_face_height=external_height_body + self.FACE_OVERLAP * 2
-       )
+    def get_name(self) -> str:
+        return f"Lite Bend Single Door Leaf Cover {self.external_face_width}x{self.external_face_height}"
 
-       core = FireproofPanel()
+    def get_internal_reference(self) -> str:
+        return f"LITE-COVER-{self.external_face_width}x{self.external_face_height}"
 
-       super().__init__(base, cover, core)
+    def get_type(self) -> str:
+        return "product"
 
-DoubleRabbetProfileFrameTypes = Union[ProfileFrameDoubleRabbet, ProfileFrameDoubleRabbetWithBackbendReturn]
 
-class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet):
-    def __init__(self, lintel: DoubleRabbetProfileFrameTypes, jamb: DoubleRabbetProfileFrameTypes, grampa: Grampa):
-        
-        super().__init__(
-            lintel=lintel,
-            jamb=jamb, 
-            grampa=grampa
+class LiteSingleDoorLeaf(SingleDoorLeaf, OdooAssemblyMixin):
+    FACE_OVERLAP = 9
+
+    def __init__(self, external_width_body: float, external_height_body: float):
+        base = LiteBendSingleDoorLeafBase(
+            external_width_body=external_width_body,
+            external_height_body=external_height_body,
         )
 
-class LiteSingleDoor(SingleDoor):
-    def __init__(self, ancho_pl: int, alto_pl: int, sentido: Sentido, 
-                 marco: Marco, grampa: Grampa):
+        cover = LiteBendSingleDoorLeafCover(
+            external_face_width=external_width_body + self.FACE_OVERLAP * 2,
+            external_face_height=external_height_body + self.FACE_OVERLAP * 2,
+        )
+
+        core = FireproofPanel()
+
+        super().__init__(base, cover, core)
+
+    def get_name(self) -> str:
+        base = self.components['bend_single_door_leaf_base'][1]
+        return f"Lite Single Door Leaf {base.external_width_body}x{base.external_height_body}"
+
+    def get_internal_reference(self) -> str:
+        base = self.components['bend_single_door_leaf_base'][1]
+        return f"LITE-LEAF-{base.external_width_body}x{base.external_height_body}"
+
+    def get_type(self) -> str:
+        return "product"
+
+
+DoubleRabbetProfileFrameTypes = Union[
+    ProfileFrameDoubleRabbet, ProfileFrameDoubleRabbetWithBackbendReturn
+]
+
+
+class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet, OdooAssemblyMixin):
+    def __init__(
+        self,
+        lintel: DoubleRabbetProfileFrameTypes,
+        jamb: DoubleRabbetProfileFrameTypes,
+        grampa: Grampa,
+    ):
+
+        super().__init__(lintel=lintel, jamb=jamb, grampa=grampa)
+
+    def get_name(self) -> str:
+        return f"Lite Door Frame Double Rabbet {self.components['lintel'][1].length}"
         
+    def get_internal_reference(self) -> str:
+        return f"LITE-FRAME-{self.components['lintel'][1].length}"
+        
+    def get_type(self) -> str:
+        return "product"
+
+class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
+    def __init__(
+        self,
+        ancho_pl: int,
+        alto_pl: int,
+        sentido: Sentido,
+        marco: Marco,
+        grampa: Grampa,
+    ):
+
         door_leaf = LiteSingleDoorLeaf(
-            external_width_body=ancho_pl,
-            external_height_body=alto_pl
+            external_width_body=ancho_pl, external_height_body=alto_pl
         )
 
         door_frame = LiteDoorFrameDoubleRabbet(
             lintel=self.get_frame_profile_for_frame(marco, ancho_pl + 100),
-            jamb=self.get_frame_profile_for_frame(marco, alto_pl + 50), 
-            grampa=grampa
+            jamb=self.get_frame_profile_for_frame(marco, alto_pl + 50),
+            grampa=grampa,
         )
 
         intumescent_seal = IntumescentSeal10x1()
@@ -148,7 +236,7 @@ class LiteSingleDoor(SingleDoor):
             door_leaf=door_leaf,
             door_frame=door_frame,
             hinges=(3, self.get_hinge_from_sentido(sentido)),
-            intumescent_seal=intumescent_seal
+            intumescent_seal=intumescent_seal,
         )
 
     def get_hinge_from_sentido(self, sentido: Sentido) -> Hinge:
@@ -157,7 +245,9 @@ class LiteSingleDoor(SingleDoor):
         else:
             return LiteHingeRight()
 
-    def get_frame_profile_for_frame(self, marco: Marco, length: float) -> DoubleRabbetProfileFrameTypes:
+    def get_frame_profile_for_frame(
+        self, marco: Marco, length: float
+    ) -> DoubleRabbetProfileFrameTypes:
         if marco == Marco.INT_100_EXT_130:
             return LiteProfileFrameDoubleRabbet100(length=length)
         elif marco == Marco.INT_120_EXT_150:
@@ -165,7 +255,17 @@ class LiteSingleDoor(SingleDoor):
         else:
             return LiteProfileFrameDoubleRabbet140(length=length)
 
+    def get_name(self) -> str:
+        return f"Lite Single Door {self.ancho_pl}x{self.alto_pl} {self.sentido.name} {self.marco.name}"
+        
+    def get_internal_reference(self) -> str:
+        return f"LITE-DOOR-{self.ancho_pl}x{self.alto_pl}-{self.sentido.name}-{self.marco.name}"
+        
+    def get_type(self) -> str:
+        return "product"
 
 if __name__ == "__main__":
-    puerta_simple_lite_900_2000 = LiteSingleDoor(900, 2000, Sentido.IZQUIERDA, Marco.INT_100_EXT_130, Grampa.DURLOCK)
+    puerta_simple_lite_900_2000 = LiteSingleDoor(
+        900, 2000, Sentido.IZQUIERDA, Marco.INT_100_EXT_130, Grampa.DURLOCK
+    )
     puerta_simple_lite_900_2000.show_components()

@@ -1,6 +1,6 @@
 from odoo import models
 from mesquita_environment import MesquitaEnvironment
-from odoo_lite import OdooLiteSingleDoor
+from lite import LiteSingleDoor
 from attributes import Sentido, Marco, Grampa
 
 class ProductTemplate(models.Model):
@@ -21,7 +21,7 @@ class ProductTemplate(models.Model):
         grampa = Grampa[values['GRAMPA']]
         
         with MesquitaEnvironment(self.env):
-            door = OdooLiteSingleDoor(
+            door = LiteSingleDoor(
                 ancho_pl=ancho_pl,
                 alto_pl=alto_pl,
                 sentido=sentido,
