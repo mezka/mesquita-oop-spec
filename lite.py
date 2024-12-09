@@ -129,14 +129,13 @@ class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
     SHEET_METAL_THICKNESS = 0.9
     FACE_OVERLAP = 18
 
-
-def __init__(self, external_face_width: float, external_face_height: float):
-    super().__init__(
-        external_face_width=external_face_width,
-        external_face_height=external_face_height,
-        return_flange_width=self.RETURN_FLANGE_WIDTH,
-        sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
-    )
+    def __init__(self, external_face_width: float, external_face_height: float):
+        super().__init__(
+            external_face_width=external_face_width,
+            external_face_height=external_face_height,
+            return_flange_width=self.RETURN_FLANGE_WIDTH,
+            sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
+        )
 
     def get_name(self) -> str:
         return f"Lite Bend Single Door Leaf Cover {self.external_face_width}x{self.external_face_height}"
