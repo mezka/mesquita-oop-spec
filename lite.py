@@ -73,6 +73,11 @@ class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet, OdooAssemblyMixi
             sheet_metal_thickness=self.SHEET_METAL_THICKNESS,
         )
 
+    def get_name(self) -> str:
+        return f"Lite Profile Frame Double Rabbet 120 L={self.length}mm"
+    
+    def get_default_code(self) -> str:
+        return f"LITE-FRAME-120-{self.length}"
 
 class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
     SHEET_METAL_THICKNESS = 1.2
