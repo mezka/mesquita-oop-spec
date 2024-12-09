@@ -15,10 +15,13 @@ class OdooMixin(ABC):
         """Return internal reference (default_code) for Odoo"""
         pass
 
-    @abstractmethod     
     def get_type(self) -> str:
-        """Return product type for Odoo"""
-        pass 
+        """Return product type for Odoo. Defaults to product."""
+        return "product"
+
+    def get_uom(self) -> str:
+        """Return product unit of measure for Odoo. Defaults to unit."""
+        return "unit"
 
     def get_odoo_data(self) -> Dict[str, Any]:
         """Get complete Odoo product data"""
@@ -26,9 +29,11 @@ class OdooMixin(ABC):
             "name": self.get_name(),
             "default_code": self.get_internal_reference(),
             "type": self.get_type(),
-            "detailed_type": self.get_type()
+            "detailed_type": self.get_type(),
+            "uom_id": self.env.ref(f'uom.{self.get_uom()}').id,
+            "uom_po_id": self.env.ref(f'uom.{self.get_uom()}').id
         }
-
+    
     def ensure_product_exists(self) -> int:
         """Ensure product exists in Odoo"""
         product = self.env['product.template'].search(
