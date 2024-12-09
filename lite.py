@@ -208,6 +208,11 @@ class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
         grampa: Grampa,
     ):
 
+        self.ancho_pl = ancho_pl
+        self.alto_pl = alto_pl
+        self.sentido = sentido.value
+        self.marco = marco.value
+
         door_leaf = LiteSingleDoorLeaf(
             external_width_body=ancho_pl, external_height_body=alto_pl
         )
@@ -244,10 +249,10 @@ class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
             return LiteProfileFrameDoubleRabbet140(length=length)
 
     def get_name(self) -> str:
-        return f"Lite Single Door {self.ancho_pl}x{self.alto_pl} {self.sentido.name} {self.marco.name}"
+        return f"Lite Single Door {self.ancho_pl}x{self.alto_pl} {self.sentido} {self.marco}"
 
     def get_default_code(self) -> str:
-        return f"LITE-DOOR-{self.ancho_pl}x{self.alto_pl}-{self.sentido.name}-{self.marco.name}"
+        return f"LITE-DOOR-{self.ancho_pl}x{self.alto_pl}-{self.sentido}-{self.marco}"
 
 
 if __name__ == "__main__":
