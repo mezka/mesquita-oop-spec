@@ -1,85 +1,82 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, Optional
 
 class OdooMixin(ABC):
-    """Base mixin for Odoo product creation"""
     env = None
         
     @abstractmethod
     def get_name(self) -> str:
-        """Return product name for Odoo"""
         pass
         
     @abstractmethod
-    def get_internal_reference(self) -> str:
-        """Return internal reference (default_code) for Odoo"""
+    def get_default_code(self) -> str:
         pass
 
     def get_type(self) -> str:
-        """Return product type for Odoo. Defaults to product."""
         return "product"
 
     def get_uom(self) -> str:
-        """Return product unit of measure for Odoo. Defaults to unit."""
         return "unit"
 
-    def get_odoo_data(self) -> Dict[str, Any]:
-        """Get complete Odoo product data"""
-        return {
-            "name": self.get_name(),
-            "default_code": self.get_internal_reference(),
-            "type": self.get_type(),
-            "detailed_type": self.get_type(),
-            "uom_id": self.env.ref(f'uom.{self.get_uom()}').id,
-            "uom_po_id": self.env.ref(f'uom.{self.get_uom()}').id
-        }
-    
-    def ensure_product_exists(self) -> int:
-        """Ensure product exists in Odoo"""
-        product = self.env['product.template'].search(
-            [('default_code', '=', self.get_internal_reference())], 
-            limit=1
-        )
-        if not product:
-            product = self.env['product.template'].create(self.get_odoo_data())
-        return product.id
-
-class OdooAssemblyMixin(OdooMixin):
-    """Mixin for assemblies that need BOMs"""
-    
-    def _create_bom_lines(self) -> List[Tuple[int, int, Dict[str, Any]]]:
-        """Create BOM lines from components dict"""
-        lines = []
-        # We know components exists because this mixin should only be used with Assembly classes
-        for name, (qty, component) in self.components.items():
-            if isinstance(component, OdooMixin):
-                # Ensure component product exists and get its ID
-                product_id = component.ensure_product_exists()
-                lines.append((0, 0, {
-                    'product_id': product_id,
-                    'product_qty': qty
-                }))
-        return lines
-    
-    def ensure_bom_exists(self, product_id: int):
-        """Ensure BOM exists for product"""
-        bom = self.env['mrp.bom'].search([
-            ('product_tmpl_id', '=', product_id)
+    def _get_product(self) -> Optional[int]:
+        product = self.env['product.product'].search([
+            ('default_code', '=', self.get_default_code())
         ], limit=1)
-        
-        if not bom:
-            self._create_bom(product_id)
-    
-    def _create_bom(self, product_id: int):
-        """Create BOM record"""
-        self.env['mrp.bom'].create({
-            'product_tmpl_id': product_id,
-            'type': 'normal',
-            'bom_line_ids': self._create_bom_lines()
+        return product.id if product else None
+
+    def _create_product(self) -> int:
+        product = self.env['product.product'].create({
+            'name': self.get_name(),
+            'default_code': self.get_default_code(),
+            'type': self.get_type(),
+            'detailed_type': self.get_type(),
+            'uom_id': self.env.ref(f'uom.{self.get_uom()}').id,
+            'uom_po_id': self.env.ref(f'uom.{self.get_uom()}').id
         })
 
-    def save_to_odoo(self):
-        """Main method to create/update product and BOM"""
-        product_id = self.ensure_product_exists()
-        self.ensure_bom_exists(product_id)
+        return product.id
+
+    def save_to_odoo(self) -> int:
+        product_id = self._get_product()
+        if not product_id:
+            product_id = self._create_product()
+        return product_id
+
+class OdooAssemblyMixin(OdooMixin):
+    def _get_bom(self, product_id: int):
+        return self.env['mrp.bom'].search([
+            ('product_id', '=', product_id)
+        ], limit=1)
+
+    def _create_bom(self, product_id: int, component_ids: Dict[int, float]):
+        product = self.env['product.product'].browse(product_id)
+        
+        bom_lines = [
+            (0, 0, {
+                'product_id': comp_id,
+                'product_qty': qty
+            }) 
+            for comp_id, qty in component_ids.items()
+        ]
+        
+        self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+            'product_id': product_id,
+            'type': 'normal',
+            'bom_line_ids': bom_lines
+        })
+
+    def save_to_odoo(self) -> int:
+        component_ids = {}
+        
+        for qty, component in self.components.values():
+            if isinstance(component, OdooMixin):
+                component_id = component.save_to_odoo()
+                component_ids[component_id] = qty
+        
+        product_id = super().save_to_odoo()
+        
+        if component_ids and not self._get_bom(product_id):
+            self._create_bom(product_id, component_ids)
+            
         return product_id

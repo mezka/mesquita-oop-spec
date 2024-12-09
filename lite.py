@@ -48,7 +48,7 @@ class LiteProfileFrameDoubleRabbet100(
     def get_name(self) -> str:
         return f"Lite Profile Frame Double Rabbet 100 L={self.length}mm"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-FRAME-100-{self.length}"
 
 
@@ -98,7 +98,7 @@ class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixi
     def get_name(self) -> str:
         return f"Lite Profile Frame Double Rabbet 100 L={self.length}mm"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-FRAME-100-{self.length}"
 
 
@@ -120,7 +120,7 @@ class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
     def get_name(self) -> str:
         return f"Lite Bend Single Door Leaf Base {self.external_width_body}x{self.external_height_body}"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-BASE-{self.external_width_body}x{self.external_height_body}"
 
 
@@ -140,7 +140,7 @@ class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
     def get_name(self) -> str:
         return f"Lite Bend Single Door Leaf Cover {self.external_face_width}x{self.external_face_height}"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-COVER-{self.external_face_width}x{self.external_face_height}"
 
 
@@ -166,7 +166,7 @@ class LiteSingleDoorLeaf(SingleDoorLeaf, OdooAssemblyMixin):
         base = self.components['bend_single_door_leaf_base'][1]
         return f"Lite Single Door Leaf {base.external_width_body}x{base.external_height_body}"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         base = self.components['bend_single_door_leaf_base'][1]
         return f"LITE-LEAF-{base.external_width_body}x{base.external_height_body}"
 
@@ -189,7 +189,7 @@ class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet, OdooAssemblyMixin):
     def get_name(self) -> str:
         return f"Lite Door Frame Double Rabbet {self.components['lintel'][1].length}"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-FRAME-{self.components['lintel'][1].length}"
 
 
@@ -241,7 +241,7 @@ class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
     def get_name(self) -> str:
         return f"Lite Single Door {self.ancho_pl}x{self.alto_pl} {self.sentido.name} {self.marco.name}"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return f"LITE-DOOR-{self.ancho_pl}x{self.alto_pl}-{self.sentido.name}-{self.marco.name}"
 
 

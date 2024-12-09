@@ -11,7 +11,7 @@ class IntumescentSeal10x1(IntumescentSeal, OdooMixin):
     def get_name(self) -> str:
         return "Intumescent Seal 10x1"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return self.INTERNAL_CODE
 
     def get_uom(self) -> str:
@@ -27,7 +27,7 @@ class LiteHingeRight(Hinge, OdooMixin):
     def get_name(self) -> str:
         return "Lite Hinge Right"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return self.INTERNAL_CODE
 
 
@@ -41,7 +41,7 @@ class LiteHingeLeft(Hinge, OdooMixin):
     def get_name(self) -> str:
         return "Lite Hinge Left"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return self.INTERNAL_CODE
 
 
@@ -62,5 +62,5 @@ class FireproofPanel(Core, OdooMixin):
     def get_name(self) -> str:
         return f"Fireproof Panel {self.THICKNESS}mm"
 
-    def get_internal_reference(self) -> str:
+    def get_default_code(self) -> str:
         return self.INTERNAL_CODE
