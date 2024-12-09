@@ -1,4 +1,3 @@
-from attributes import Sentido, Marco, Grampa
 from base_classes import (
     Hinge,
     SingleDoor,
@@ -16,7 +15,9 @@ from specific_parts import (
     LiteHingeLeft,
     IntumescentSeal10x1,
 )
+from odoo_mixins import OdooAssemblyMixin
 from typing import Union
+from attributes import Sentido, Marco, Grampa
 
 
 class LiteProfileFrameDoubleRabbet100(
@@ -49,9 +50,6 @@ class LiteProfileFrameDoubleRabbet100(
 
     def get_internal_reference(self) -> str:
         return f"LITE-FRAME-100-{self.length}"
-
-    def get_type(self) -> str:
-        return "product"
 
 
 class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
@@ -103,9 +101,6 @@ class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixi
     def get_internal_reference(self) -> str:
         return f"LITE-FRAME-100-{self.length}"
 
-    def get_type(self) -> str:
-        return "product"
-
 
 class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
 
@@ -128,9 +123,6 @@ class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
     def get_internal_reference(self) -> str:
         return f"LITE-BASE-{self.external_width_body}x{self.external_height_body}"
 
-    def get_type(self) -> str:
-        return "product"
-
 
 class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
     RETURN_FLANGE_WIDTH = 5
@@ -151,9 +143,6 @@ def __init__(self, external_face_width: float, external_face_height: float):
 
     def get_internal_reference(self) -> str:
         return f"LITE-COVER-{self.external_face_width}x{self.external_face_height}"
-
-    def get_type(self) -> str:
-        return "product"
 
 
 class LiteSingleDoorLeaf(SingleDoorLeaf, OdooAssemblyMixin):
@@ -182,9 +171,6 @@ class LiteSingleDoorLeaf(SingleDoorLeaf, OdooAssemblyMixin):
         base = self.components['bend_single_door_leaf_base'][1]
         return f"LITE-LEAF-{base.external_width_body}x{base.external_height_body}"
 
-    def get_type(self) -> str:
-        return "product"
-
 
 DoubleRabbetProfileFrameTypes = Union[
     ProfileFrameDoubleRabbet, ProfileFrameDoubleRabbetWithBackbendReturn
@@ -203,12 +189,10 @@ class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet, OdooAssemblyMixin):
 
     def get_name(self) -> str:
         return f"Lite Door Frame Double Rabbet {self.components['lintel'][1].length}"
-        
+
     def get_internal_reference(self) -> str:
         return f"LITE-FRAME-{self.components['lintel'][1].length}"
-        
-    def get_type(self) -> str:
-        return "product"
+
 
 class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
     def __init__(
@@ -257,12 +241,10 @@ class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
 
     def get_name(self) -> str:
         return f"Lite Single Door {self.ancho_pl}x{self.alto_pl} {self.sentido.name} {self.marco.name}"
-        
+
     def get_internal_reference(self) -> str:
         return f"LITE-DOOR-{self.ancho_pl}x{self.alto_pl}-{self.sentido.name}-{self.marco.name}"
-        
-    def get_type(self) -> str:
-        return "product"
+
 
 if __name__ == "__main__":
     puerta_simple_lite_900_2000 = LiteSingleDoor(
