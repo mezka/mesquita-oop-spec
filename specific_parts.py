@@ -33,7 +33,7 @@ class LiteHingeRight(Hinge, OdooMixin):
 
 
 class LiteHingeLeft(Hinge, OdooMixin):
-    INTERNAL_CODE = 'RC212D'
+    INTERNAL_CODE = 'RC212I'
 
     def __init__(self):
         super().__init__(internal_code=self.INTERNAL_CODE)
