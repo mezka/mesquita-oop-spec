@@ -1,0 +1,2 @@
+id,default_code,name,description,is_custom_door,uom_id/id,uom_po_id/id,route_ids/id
+product_template_rf_30_lite_simple,product_template_rf_30_lite_simple,PUERTA RF30 LITE SIMPLE,PUERTA RF30 LITE SIMPLE,TRUE,uom.product_uom_unit,uom.product_uom_unit,mrp.route_warehouse0_manufacture

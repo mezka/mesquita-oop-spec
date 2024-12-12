@@ -1,4 +1,4 @@
-from base_classes import (
+from .base_classes import (
     Hinge,
     SingleDoor,
     SingleDoorLeaf,
@@ -9,19 +9,18 @@ from base_classes import (
     ProfileFrameDoubleRabbet,
     ProfileFrameDoubleRabbetWithBackbendReturn,
 )
-from specific_parts import (
+from .specific_parts import (
     FireproofPanel,
     LiteHingeRight,
     LiteHingeLeft,
     IntumescentSeal10x1,
 )
-from odoo_mixins import OdooAssemblyMixin
+from .attributes import Sentido, Marco, Grampa
 from typing import Union
-from attributes import Sentido, Marco, Grampa
 
 
 class LiteProfileFrameDoubleRabbet100(
-    ProfileFrameDoubleRabbetWithBackbendReturn, OdooAssemblyMixin
+    ProfileFrameDoubleRabbetWithBackbendReturn
 ):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
@@ -52,7 +51,7 @@ class LiteProfileFrameDoubleRabbet100(
         return f"LITE-FRAME-100-{self.length}"
 
 
-class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
+class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
     FRAME_BACKBEND = 10
@@ -79,7 +78,7 @@ class LiteProfileFrameDoubleRabbet120(ProfileFrameDoubleRabbet, OdooAssemblyMixi
     def get_default_code(self) -> str:
         return f"LITE-FRAME-120-{self.length}"
 
-class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixin):
+class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet):
     SHEET_METAL_THICKNESS = 1.2
     FRAME_RABBET_FOR_LEAF = 52
     FRAME_BACKBEND = 10
@@ -107,7 +106,7 @@ class LiteProfileFrameDoubleRabbet140(ProfileFrameDoubleRabbet, OdooAssemblyMixi
         return f"LITE-FRAME-100-{self.length}"
 
 
-class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
+class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase):
 
     INTERIOR_DEPTH = 50
     ASSEMBLY_FLANGE_WIDTH = 5
@@ -129,7 +128,7 @@ class LiteBendSingleDoorLeafBase(BendSingleDoorLeafBase, OdooAssemblyMixin):
         return f"LITE-BASE-{self.external_width_body}x{self.external_height_body}"
 
 
-class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
+class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover):
     RETURN_FLANGE_WIDTH = 5
     SHEET_METAL_THICKNESS = 0.9
     FACE_OVERLAP = 18
@@ -149,7 +148,7 @@ class LiteBendSingleDoorLeafCover(BendSingleDoorLeafCover, OdooAssemblyMixin):
         return f"LITE-COVER-{self.external_face_width}x{self.external_face_height}"
 
 
-class LiteSingleDoorLeaf(SingleDoorLeaf, OdooAssemblyMixin):
+class LiteSingleDoorLeaf(SingleDoorLeaf):
     FACE_OVERLAP = 9
 
     def __init__(self, external_width_body: float, external_height_body: float):
@@ -181,7 +180,7 @@ DoubleRabbetProfileFrameTypes = Union[
 ]
 
 
-class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet, OdooAssemblyMixin):
+class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet):
     def __init__(
         self,
         lintel: DoubleRabbetProfileFrameTypes,
@@ -198,7 +197,7 @@ class LiteDoorFrameDoubleRabbet(DoorFrameDoubleRabbet, OdooAssemblyMixin):
         return f"LITE-FRAME-{self.components['lintel'][1].length}"
 
 
-class LiteSingleDoor(SingleDoor, OdooAssemblyMixin):
+class LiteSingleDoor(SingleDoor):
     def __init__(
         self,
         ancho_pl: int,

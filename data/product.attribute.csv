@@ -1,0 +1,7 @@
+create_variant,id,name,display_type
+dynamic,product_attribute_acabado,ACABADO,radio
+dynamic,product_attribute_alto_pl,ALTO PL,select
+dynamic,product_attribute_sentido,SENTIDO,radio
+dynamic,product_attribute_marco,MARCO,radio
+dynamic,product_attribute_grampa,GRAMPA,radio
+dynamic,product_attribute_ancho_pl,ANCHO PL,select

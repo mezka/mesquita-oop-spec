@@ -17,12 +17,11 @@ class EnumToOdooProductAttributeMixin:
                     'name': member.value,
                     'attribute_id/id': f'product_attribute_{attribute_name.lower()}',
                     'is_custom': 'FALSE',
-                    'sequence': sequence,
                 }
                 for member in cls
             ],
             'product_attribute_display_type': display_type,
-            'sequence': sequence,
+            'sequence': str(int(sequence)),
         }
 
 class BaseEnum(EnumToOdooProductAttributeMixin, str, Enum):

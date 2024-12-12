@@ -1,4 +1,4 @@
-from odoo_mixins import OdooMixin
+from .odoo_mixins3 import OdooMixin
 
 class MesquitaEnvironment:
     def __init__(self, env):

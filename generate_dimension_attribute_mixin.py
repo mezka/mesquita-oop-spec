@@ -4,7 +4,7 @@ def generate_dimension_attribute_mixin(name: str, start: int, end: int, step: in
     values = [
         {
             'id': f'product_attribute_value_{name.lower().replace(" ", "_")}_{dim}_mt_{dim + offset}',
-            'name': f'{name.upper()}: {dim}MM, MT: {dim + offset}MM',
+            'name': f'{dim}',
             'attribute_id/id': f'product_attribute_{name.lower().replace(" ", "_")}',
             'is_custom': 'FALSE'
         }
